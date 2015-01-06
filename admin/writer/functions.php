@@ -72,32 +72,39 @@
 	} 
 	// 文章元数据验证
 	function post_info_ver($postInfoKey,$postInfoVal){
+		$isChange=0;
 		switch ($postInfoKey)
 			{
 			case "title":
 				if(preg_match("/\s+/i",$postInfoVal) or !isset($postInfoVal) or empty($postInfoVal)){
 					$postInfoVal="无标题文章";
+					$isChange=1;
+					
 				}
 				break;
 			case "date":
-				if(preg_match("/\s+/i",$postInfoVal) or !isset($postInfoVal) or empty($postInfoVal)){
+				if(empty($postInfoVal)){
 					date_default_timezone_set("Asia/Chongqing");
 					$postInfoVal=date('Y-m-d H:i:s',time());
+					$isChange=1;
 				}
 				break;
 			case "price":
-				if(preg_match("/\s+/i",$postInfoVal) or !isset($postInfoVal) or empty($postInfoVal)){
+				if(preg_match("/\s+/i",$postInfoVal) or !isset($postInfoVal)){
 					$postInfoVal="0";
+					$isChange=1;
 				}
 				break;
 			case "autoid":
 				if(preg_match("/\s+/i",$postInfoVal) or !isset($postInfoVal) or empty($postInfoVal)){
 					$postInfoVal=generate_autoid();
+					$isChange=1;
 				}
 				break;
 			default:
+				$isChange=0;
 			}
-		return $postInfoVal;
+		return array($postInfoVal,$isChange);
 	}
 	// 获取文章元数据
 	function get_post_info($postinfo,$postInfoKey){
@@ -105,7 +112,6 @@
 		preg_match($matchWord, $postinfo, $keyvalarr);
 		$keyvalarr=explode($postInfoKey.':', isset($keyvalarr[0])?$keyvalarr[0]:"");
 		$keyval=isset($keyvalarr[1])?$keyvalarr[1]:"";
-		$keyval=post_info_ver($postInfoKey,$keyval);
-		return $keyval;
+		return post_info_ver($postInfoKey,$keyval);
 	}
 ?>
