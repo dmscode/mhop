@@ -15,6 +15,8 @@
 	$contentDir="admin/content/";
 	// 生成目录
 	$publicDir="public/";
+	// 网站模板
+	$theme="default";
 	// 文章信息关键字
 	$postInfoKeywords=array("title","desc","date","tags","price","downloadlink","imglink","autoid");
 ?>

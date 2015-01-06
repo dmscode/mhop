@@ -5,6 +5,7 @@
 	 * @param RecursiveDirectoryIterator $dir 指定了目录的RecursiveDirectoryIterator实例
 	 * @return array $files 文件列表
 	 */
+	 // 遍历文件
 	function get_files($dir) {
 		$files = array();
 		for (; $dir->valid(); $dir->next()) {
@@ -21,23 +22,70 @@
 	// 读取文件
 	function read_file($file_name) {
 		if(file_exists($file_name) and filesize($file_name)>0){
-			$myfile = fopen($file_name, "r") or die("Unable to open file!");
-			$filecontent=fread($myfile,filesize($file_name));
+			$myfile = fopen($file_name, "r");
+			$file_content=fread($myfile,filesize($file_name));
 			fclose($myfile);
 		}else{
-			$filecontent="";
+			global $create_log;
+			$create_log =$create_log.$file_name."不存在，或者文件为空.\n";
+			$file_content="";
 		}
-		return $filecontent;
+		return $file_content;
+	}
+	//创建目录函数
+	function mkdirs($dir){
+		if(!is_dir($dir)){
+			if(!mkdirs(dirname($dir))){
+				exit('不能创建目录');
+			}
+			if(!mkdir($dir,0777)){
+				exit('不能创建目录2');
+			}
+		}
+		return true;
+	}
+	// 删除目录函数
+	function deldir($dir) {
+		//先删除目录下的文件：
+		$dh=opendir($dir);
+		while ($file=readdir($dh)) {
+			if($file!="." && $file!="..") {
+				$fullpath=$dir."/".$file;
+				if(!is_dir($fullpath)) {
+					unlink($fullpath);
+				} else {
+					deldir($fullpath);
+				}
+			}
+		}
+
+		closedir($dh);
+		//删除当前文件夹：
+		if(rmdir($dir)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	// 写入文件(追加)
 	function write_add_file($file_name,$content) {
-		$myfile = fopen($file_name, "a") or die("Unable to open file!");
+		$dir_name=dirname($file_name);
+		//目录不存在就创建
+		if(!file_exists($dir_name)){
+			mkdirs($dir_name);
+		}
+		$myfile = fopen($file_name, "a");
 		fwrite($myfile,$content);
 		fclose($myfile);
 	}
 	// 写入文件(覆写)
 	function write_file($file_name,$content) {
-		$myfile = fopen($file_name, "w") or die("Unable to open file!");
+		$dir_name=dirname($file_name);
+		//目录不存在就创建
+		if(!file_exists($dir_name)){
+			mkdirs($dir_name);
+		}
+		$myfile = fopen($file_name, "w");
 		fwrite($myfile,$content);
 		fclose($myfile);
 	}
@@ -49,11 +97,7 @@
 		$autoid ='';  
 		$onlyId=1;
 		$indexIdFile="temp/idindex.php";
-		if(file_exists($indexIdFile)){
-			$idIndex=read_file($indexIdFile);
-		}else{
-			$idIndex="";
-		}
+		$idIndex=read_file($indexIdFile);
 		do{
 			for ( $i = 0; $i < $length; $i++ )  
 			{  
@@ -76,10 +120,9 @@
 		switch ($postInfoKey)
 			{
 			case "title":
-				if(preg_match("/\s+/i",$postInfoVal) or !isset($postInfoVal) or empty($postInfoVal)){
+				if(empty($postInfoVal)){
 					$postInfoVal="无标题文章";
 					$isChange=1;
-					
 				}
 				break;
 			case "date":
@@ -96,9 +139,19 @@
 				}
 				break;
 			case "autoid":
-				if(preg_match("/\s+/i",$postInfoVal) or !isset($postInfoVal) or empty($postInfoVal)){
+				if(empty($postInfoVal) or !preg_match("/^\w{6}$/i",$postInfoVal)){
 					$postInfoVal=generate_autoid();
 					$isChange=1;
+				}else{
+					$indexIdFile="temp/idindex.php";
+					$idIndex=read_file($indexIdFile);
+					if(!preg_match("/".$postInfoVal."/i",$idIndex)){
+						write_add_file($indexIdFile,$postInfoVal."\n");
+						$isChange=0;
+					}else{
+						$postInfoVal=generate_autoid();
+						$isChange=1;
+					}
 				}
 				break;
 			default:
@@ -114,4 +167,17 @@
 		$keyval=isset($keyvalarr[1])?$keyvalarr[1]:"";
 		return post_info_ver($postInfoKey,$keyval);
 	}
+	// 读取模版代码函数，$templete_type 的值为 post index page 等，模版中没有对应的页面则读取 post
+	function read_templete($templete_type,$theme){
+		$headercode=read_file("../template/".$theme."/header.html");
+		$temp_body_url="../template/".$theme."/".$templete_type.".html";
+		if(file_exists($temp_body_url) and filesize($temp_body_url)>0){
+			$templete_type="post";
+		}
+		$contentcode=read_file("../template/".$theme."/".$templete_type.".html");
+		$footercode=read_file("../template/".$theme."/footer.html");
+		$postcode=$headercode.$contentcode.$footercode;
+		return $postcode;
+	}
+
 ?>
