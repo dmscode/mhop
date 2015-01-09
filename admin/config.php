@@ -1,6 +1,6 @@
 <?php
 	// 网站地址，最后要带 “/”
-	$localhost="";
+	$localhost="/";
 	// 网站名称
 	$siteName="Mhop";
 	// 网站描述
@@ -17,6 +17,8 @@
 	$publicDir="public/";
 	// 网站模板
 	$theme="default";
+	// 索引页每页文章数
+	$postnum=10;
 	// 文章信息关键字
 	$postInfoKeywords=array("title","desc","date","tags","price","downloadlink","imglink","autoid");
 ?>

@@ -19,6 +19,21 @@
 		}
 		return $files;
 	}
+	 // 遍历目录
+	function get_dirs($dir) {
+		$dirs = array();
+		for (; $dir->valid(); $dir->next()) {
+			if ($dir->isDir() && !$dir->isDot()) {
+				if ($dir->haschildren()) {
+					$dirs[] = $dir->getPathName();
+					$dirs = array_merge($dirs, get_dirs($dir->getChildren()));
+				}else{
+					$dirs[] = $dir->getPathName();
+				};
+			}
+		}
+		return $dirs;
+	}
 	// 读取文件
 	function read_file($file_name) {
 		if(file_exists($file_name) and filesize($file_name)>0){
@@ -45,26 +60,19 @@
 		return true;
 	}
 	// 删除目录函数
-	function deldir($dir) {
-		//先删除目录下的文件：
-		$dh=opendir($dir);
-		while ($file=readdir($dh)) {
-			if($file!="." && $file!="..") {
-				$fullpath=$dir."/".$file;
-				if(!is_dir($fullpath)) {
-					unlink($fullpath);
-				} else {
-					deldir($fullpath);
-				}
-			}
+	function deldir($path) {
+		$dir = new RecursiveDirectoryIterator($path);
+		$filesarray=get_files($dir);
+		for($i=0;$i<count($filesarray);$i++){
+			unlink($filesarray[$i]);
+			echo "删除文件".$filesarray[$i]."<br>";
 		}
-
-		closedir($dh);
-		//删除当前文件夹：
-		if(rmdir($dir)) {
-			return true;
-		} else {
-			return false;
+		$dir = new RecursiveDirectoryIterator($path);
+		$dirarray=get_dirs($dir);
+		rsort($dirarray);
+		for($i=0;$i<count($dirarray);$i++){
+			rmdir($dirarray[$i]);
+			echo "删除目录".$dirarray[$i]."<br>";
 		}
 	}
 	// 写入文件(追加)
