@@ -1,0 +1,21 @@
+删除文件../../public\archives\index.html
+删除文件../../public\files\bootstrap.min.css
+删除文件../../public\files\bootstrap.min.js
+删除文件../../public\files\css.css
+删除文件../../public\files\jquery.min.js
+删除文件../../public\files\page_nav.js
+删除文件../../public\index.html
+删除文件../../public\post\2015\01\11\hello-world\index.html
+删除目录../../public\post\2015\01\11\hello-world
+删除目录../../public\post\2015\01\11
+删除目录../../public\post\2015\01
+删除目录../../public\post\2015
+删除目录../../public\post
+删除目录../../public\files
+删除目录../../public\archives
+删除文件temp\idindex.php
+删除文件temp\index\2015-01.txt
+删除目录temp\index
+生成文件 ../../public/post/2015/01/11/hello-world/index.html
+生成网站首页 ../../public/index.html
+生成索引文件 ../../public/archives/index.html

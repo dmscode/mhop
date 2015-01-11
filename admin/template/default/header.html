@@ -3,43 +3,47 @@
 	<head>
 		<meta charset="utf-8">
 		<title><!-- template{page_title} --></title>
-		<meta name="description" content="<!-- template{desc}-->" />
-		<meta name="keywords" content="<!-- template{tags}-->" />
+		<meta name="description" content="<!-- template{desc} -->" />
+		<meta name="keywords" content="<!-- template{tags} -->" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="files/bootstrap.min.css">
 		<link rel="stylesheet" href="files/css.css">
 		<script type="text/javascript" src="files/jquery.min.js"></script>
+		<!-- template{page_js} -->
 	</head>
 
 	<body>
-		<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
-			<div class="container">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="<!-- template{localhost} -->"><!-- template{siteName} --></a>
-				</div>
+		<div  id="header">
+			<nav class="navbar navbar-default navbar-inverse" role="navigation">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="<!-- template{localhost} -->"><!-- template{siteName} --></a>
+					</div>
 
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<!-- template{navCode} -->
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">RSS</a></li>
-						<li><a href="#">搜索</a></li>
-					</ul>
-				</div><!-- /.navbar-collapse -->
-			</div>
-		</nav>
-		<div class="container">
-			<div id="header" class="text-center">
-				<h1><!-- template{siteName} --></h1>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<!-- template{navCode} -->
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#">RSS</a></li>
+							<li><a href="#">搜索</a></li>
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</div>
+			</nav>
+			<div class="text-center" id="header-title">
+				<h1><a href="<!-- template{localhost} -->"><!-- template{siteName} --></a></h1>
 				<h2><small><!-- template{siteDesc} --></small></h2>
 			</div>
+		</div>
+		<div class="container">
+			<div class="row">
