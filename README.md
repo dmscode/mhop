@@ -3,6 +3,8 @@
 
 这是一个用 PHP 语言写的静态网站生成程序，这个名字是 My hope 或者 My shop 的缩写。
 
+演示站：[http://mhop.zji.me/](http://mhop.zji.me/)
+
 	后台首页在：**admin/index.php**
 	
 	默认文章文件储存在：**admin/content/** 目录下。

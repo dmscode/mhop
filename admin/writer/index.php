@@ -165,7 +165,7 @@
 	if(count($indexcontentarray)>0){
 		write_index();
 	}
-	$index_nav_js='index_page_num='.$indexpagenum.';$(document).ready(function(){if(page_type=="home"){$("#next_page a").attr("href","/archives/page-1.html");}if(page_type=="index"){$("#next_page a").attr("href","page-"+page_num+".html");if(page_num>3){$("#prev_page a").attr("href","page-"+(page_num-2)+".html");}else{$("#prev_page a").attr("href","index.html");}}if(page_num==1){$("#prev_page").html("");}if(page_num==index_page_num){$("#next_page").html("");}});';
+	$index_nav_js='index_page_num='.($indexpagenum-1).';$(document).ready(function(){if(page_type=="home"){$("#next_page a").attr("href","/archives/page-1.html");}if(page_type=="index"){$("#next_page a").attr("href","page-"+page_num+".html");if(page_num>3){$("#prev_page a").attr("href","page-"+(page_num-2)+".html");}else{$("#prev_page a").attr("href","index.html");}}if(page_num==1){$("#prev_page").html("");}if(page_num==index_page_num){$("#next_page").html("");}});';
 	$index_nav_js_url="../../".$publicDir."files/page_nav.js";
 	write_file($index_nav_js_url,$index_nav_js);
 	unset($value); // 最后取消掉引用
