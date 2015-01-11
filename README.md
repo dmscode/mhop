@@ -5,13 +5,13 @@
 
 演示站：[http://mhop.zji.me/](http://mhop.zji.me/)
 
-	后台首页在：**admin/index.php**
+	后台首页在：admin/index.php
 	
-	默认文章文件储存在：**admin/content/** 目录下。
+	默认文章文件储存在：admin/content/ 目录下。
 	
-	默认网站生成在：**public/** 目录下。
+	默认网站生成在：public/ 目录下。
 	
-	只要把 **public/** 目录下的文件上传到您的网站空间即可。
+	只要把 public/ 目录下的文件上传到您的网站空间即可。
 	
 	目前生成的网站代码只支持放在网站根目录下，此问题日后会改进。
 	
@@ -41,7 +41,7 @@
 1. 生成器初步可用，可生成文章和索引页面；
 2. 索引页上下页可以进行导航；
 3. 默认模版初步设计；
-4. 对文章源信息的验证与解析；
+4. 对文章元信息的验证与解析；
 5. 支持文章内容 Markdown 语法的解析（使用 [Parsedown](https://github.com/erusev/parsedown)）；
 
 ### 计划中的内容：
